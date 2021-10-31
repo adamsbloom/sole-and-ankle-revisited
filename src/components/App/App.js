@@ -19,6 +19,10 @@ const App = () => {
 
 const Main = styled.main`
   padding: 64px 32px;
+
+  @media (max-width: ${(p) => p.theme.tablet}) {
+    padding-top: 16px;
+  }
 `;
 
 export default App;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 import { COLORS, WEIGHTS } from '../../constants';
+import Icon from '../Icon';
 import Logo from '../Logo';
 import SuperHeader from '../SuperHeader';
 import MobileMenu from '../MobileMenu';
@@ -21,21 +22,26 @@ const Header = () => {
         <Side>
           <Logo />
         </Side>
-        <Nav>
+        <NavDesktop>
           <NavLink href="/sale">Sale</NavLink>
           <NavLink href="/new">New&nbsp;Releases</NavLink>
           <NavLink href="/men">Men</NavLink>
           <NavLink href="/women">Women</NavLink>
           <NavLink href="/kids">Kids</NavLink>
           <NavLink href="/collections">Collections</NavLink>
-        </Nav>
-        <Side />
+        </NavDesktop>
+        <Side>
+          <NavMobile>
+            <Icon id="shopping-bag" strokeWidth={2} />
+            <Icon id="search" strokeWidth={2} />
+            <NavLink onClick={() => setShowMobileMenu(true)}>
+              <Icon id="menu" strokeWidth={2} />
+            </NavLink>
+          </NavMobile>
+        </Side>
       </MainHeader>
 
-      <MobileMenu
-        isOpen={showMobileMenu}
-        onDismiss={() => setShowMobileMenu(false)}
-      />
+      <MobileMenu isOpen={showMobileMenu} onDismiss={() => setShowMobileMenu(false)} />
     </header>
   );
 };
@@ -46,12 +52,36 @@ const MainHeader = styled.div`
   padding: 18px 32px;
   height: 72px;
   border-bottom: 1px solid ${COLORS.gray[300]};
+
+  @media (max-width: ${(p) => p.theme.tablet}) {
+    border-top: 4px solid ${COLORS.gray[900]};
+    justify-content: space-between;
+  }
 `;
 
-const Nav = styled.nav`
+const NavDesktop = styled.nav`
   display: flex;
   gap: 48px;
   margin: 0px 48px;
+
+  @media (max-width: ${(p) => p.theme.tablet}) {
+    display: none;
+  }
+`;
+
+const NavMobile = styled.nav`
+  display: none;
+  gap: 40px;
+  color: ${COLORS.gray[900]};
+
+  @media (max-width: ${(p) => p.theme.tablet}) {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: ${(p) => p.theme.phone}) {
+    gap: 24px;
+  }
 `;
 
 const Side = styled.div`
@@ -67,6 +97,12 @@ const NavLink = styled.a`
 
   &:first-of-type {
     color: ${COLORS.secondary};
+  }
+
+  @media (max-width: ${(p) => p.theme.tablet}) {
+    &:first-of-type {
+      color: revert;
+    }
   }
 `;
 
